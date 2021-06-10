@@ -17,6 +17,7 @@ public class SOAP extends JFrame {
 
         SOAPModel model = new SOAPModel();
 
+
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         if (shouldFill) {
@@ -76,21 +77,21 @@ public class SOAP extends JFrame {
         nOO.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                model.dispatch = "S: 911 dispatch to a ";
+                model.dispatch = "911 dispatch to a ";
                 report.setText(model.report());
             }
         });
         law.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                model.dispatch = "S: Requested by law enforcement for a ";
+                model.dispatch = "Requested by law enforcement for a ";
                 report.setText(model.report());
             }
         });
         landline.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                model.dispatch = "S: landline dispatch to a ";
+                model.dispatch = "landline dispatch to a ";
                 report.setText(model.report());
             }
         });
@@ -100,7 +101,6 @@ public class SOAP extends JFrame {
             c.weightx = 0.5;
         }
         c.fill = GridBagConstraints.HORIZONTAL;
-//        c.ipadx = 1;
         c.gridx = 5;
         c.gridy = 0;
         add(facilityMessage, c);
@@ -125,16 +125,15 @@ public class SOAP extends JFrame {
             c.weightx = 0.5;
         }
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 0;
-        c.gridy = 1;
+        c.gridx = 8;
+        c.gridy = 0;
         add(patientAge, c);
 
         JTextField ptAge = new JTextField("age", 3);
         c.weightx = 0;
-        c.gridx = 1;
-        c.gridy = 1;
+        c.gridx = 9;
+        c.gridy = 0;
         add(ptAge, c);
-
         ptAge.getDocument().addDocumentListener(new DocumentListener() {
             public void changedUpdate(DocumentEvent e) {
                 model.age = ptAge.getText();
@@ -153,7 +152,7 @@ public class SOAP extends JFrame {
         JLabel ptGender = new JLabel("Pt gender: ");
         c.weightx = 0.5;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 3;
+        c.gridx = 0;
         c.gridy = 1;
         add(ptGender, c);
 
@@ -163,7 +162,7 @@ public class SOAP extends JFrame {
         male.setActionCommand("Male");
         male.setSelected(true);
         c.weightx = 0;
-        c.gridx = 4;
+        c.gridx = 1;
         c.gridy = 1;
         add(male, c);
 
@@ -171,7 +170,7 @@ public class SOAP extends JFrame {
         female.setMnemonic(KeyEvent.VK_F);
         female.setActionCommand("Female");
         c.weightx = 0;
-        c.gridx = 5;
+        c.gridx = 2;
         c.gridy = 1;
         add(female, c);
 
@@ -199,16 +198,16 @@ public class SOAP extends JFrame {
         JLabel patientComplaint = new JLabel("Pt Complaint: ");
         c.weightx = 0.5;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 0;
-        c.gridy = 3;
+        c.gridx = 4;
+        c.gridy = 1;
         add(patientComplaint, c);
 
         JTextField ptComplaint = new JTextField("complaint of ", 10);
         c.weightx = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 1;
+        c.gridx = 5;
         c.gridwidth = 2;
-        c.gridy = 3;
+        c.gridy = 1;
         add(ptComplaint, c);
         ptComplaint.getDocument().addDocumentListener(new DocumentListener() {
             public void changedUpdate(DocumentEvent e) {
@@ -230,16 +229,31 @@ public class SOAP extends JFrame {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridwidth = 1;
-        c.gridy = 4;
+        c.gridy = 2;
         add(patientReport, c);
 
         JTextArea ptReport = new JTextArea("[Rest of the S]", 10, 4);
+        ptReport.setLineWrap(true);
         c.weightx = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
-        c.gridwidth = 5;
-        c.gridy = 4;
+        c.gridwidth = 10;
+        c.gridy = 2;
         add(ptReport, c);
+        ptReport.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                model.report = ptReport.getText();
+                report.setText(model.report());
+            }
+
+            public void removeUpdate(DocumentEvent e) {
+                changedUpdate(e);
+            }
+
+            public void insertUpdate(DocumentEvent e) {
+                changedUpdate(e);
+            }
+        });
 
         //////////// Objective /////////////
         JLabel patientPosition = new JLabel("Position upon arrival: ");
@@ -247,21 +261,35 @@ public class SOAP extends JFrame {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridwidth = 1;
-        c.gridy = 5;
+        c.gridy = 3;
         add(patientPosition, c);
 
         JTextField ptPosition = new JTextField("supine, etc", 5);
         c.weightx = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
-        c.gridy = 5;
+        c.gridy = 3;
         add(ptPosition, c);
+        ptPosition.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                model.position = ptPosition.getText();
+                report.setText(model.report());
+            }
+
+            public void removeUpdate(DocumentEvent e) {
+                changedUpdate(e);
+            }
+
+            public void insertUpdate(DocumentEvent e) {
+                changedUpdate(e);
+            }
+        });
 
         JLabel CAOLabel = new JLabel("CAOx ");
         c.weightx = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 0;
-        c.gridy = 6;
+        c.gridx = 3;
+        c.gridy = 3;
         add(CAOLabel, c);
 
         JRadioButton CAOx0 = new JRadioButton("0");
@@ -269,8 +297,8 @@ public class SOAP extends JFrame {
         CAOx0.setActionCommand("0");
         c.weightx = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 1;
-        c.gridy = 6;
+        c.gridx = 4;
+        c.gridy = 3;
         add(CAOx0, c);
 
         JRadioButton CAOx1 = new JRadioButton("1");
@@ -278,8 +306,8 @@ public class SOAP extends JFrame {
         CAOx1.setActionCommand("1");
         c.weightx = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 2;
-        c.gridy = 6;
+        c.gridx = 5;
+        c.gridy = 3;
         add(CAOx1, c);
 
         JRadioButton CAOx2 = new JRadioButton("2");
@@ -287,8 +315,8 @@ public class SOAP extends JFrame {
         CAOx2.setActionCommand("2");
         c.weightx = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 3;
-        c.gridy = 6;
+        c.gridx = 6;
+        c.gridy = 3;
         add(CAOx2, c);
 
         JRadioButton CAOx3 = new JRadioButton("3");
@@ -296,8 +324,8 @@ public class SOAP extends JFrame {
         CAOx3.setActionCommand("3");
         c.weightx = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 4;
-        c.gridy = 6;
+        c.gridx = 7;
+        c.gridy = 3;
         add(CAOx3, c);
 
         JRadioButton CAOx4 = new JRadioButton("4");
@@ -306,8 +334,8 @@ public class SOAP extends JFrame {
         CAOx4.setSelected(true);
         c.weightx = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 5;
-        c.gridy = 6;
+        c.gridx = 8;
+        c.gridy = 3;
         add(CAOx4, c);
 
         // Group for CAOx Radio Buttons
@@ -323,30 +351,35 @@ public class SOAP extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 model.caoValue = 0;
+                report.setText(model.report());
             }
         });
         CAOx1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 model.caoValue = 1;
+                report.setText(model.report());
             }
         });
         CAOx2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 model.caoValue = 2;
+                report.setText(model.report());
             }
         });
         CAOx3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 model.caoValue = 3;
+                report.setText(model.report());
             }
         });
         CAOx4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 model.caoValue = 4;
+                report.setText(model.report());
             }
         });
 
@@ -354,16 +387,31 @@ public class SOAP extends JFrame {
         c.weightx = 0.5;
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
-        c.gridy = 7;
+        c.gridy = 4;
         add(patientPrimary, c);
 
         JTextArea ptPrimary = new JTextArea("[Rest of the O]", 10, 4);
+        ptPrimary.setLineWrap(true);
         c.weightx = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
-        c.gridwidth = 5;
-        c.gridy = 7;
+        c.gridwidth = 9;
+        c.gridy = 4;
         add(ptPrimary, c);
+        ptPrimary.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                model.primary = ptPrimary.getText();
+                report.setText(model.report());
+            }
+
+            public void removeUpdate(DocumentEvent e) {
+                changedUpdate(e);
+            }
+
+            public void insertUpdate(DocumentEvent e) {
+                changedUpdate(e);
+            }
+        });
 
         //////////// Assessment /////////////
         JLabel patientAssessment = new JLabel("Assessment: ");
@@ -371,7 +419,7 @@ public class SOAP extends JFrame {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridwidth = 1;
-        c.gridy = 8;
+        c.gridy = 5;
         add(patientAssessment, c);
 
         JTextField ptAssessment = new JTextField("[Assessment]", 10);
@@ -379,50 +427,81 @@ public class SOAP extends JFrame {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
         c.gridwidth = 2;
-        c.gridy = 8;
+        c.gridy = 5;
         add(ptAssessment, c);
+        ptAssessment.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                model.assessment = ptAssessment.getText();
+                report.setText(model.report());
+            }
+
+            public void removeUpdate(DocumentEvent e) {
+                changedUpdate(e);
+            }
+
+            public void insertUpdate(DocumentEvent e) {
+                changedUpdate(e);
+            }
+        });
 
         //////////// Plan /////////////
         JLabel patientCovid = new JLabel("COVID PPE: ");
         c.weightx = 0.5;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 4;
+        c.gridx = 3;
         c.gridwidth = 1;
-        c.gridy = 8;
+        c.gridy = 5;
         add(patientCovid, c);
 
         JCheckBox yesCovid = new JCheckBox("Yes");
         c.weightx = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 5;
-        c.gridy = 8;
+        c.gridx = 4;
+        c.gridy = 5;
         add(yesCovid, c);
         yesCovid.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 model.covidStatus = e.getStateChange() == 1 ? "Wore PPE provided for COVID-19 calls, " : "";
+                report.setText(model.report());
             }
         });
 
         JLabel patientOther = new JLabel("Other Treatments: ");
         c.weightx = 0.5;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 0;
-        c.gridy = 9;
+        c.gridx = 6;
+        c.gridy = 5;
         add(patientOther, c);
 
         JTextField otherTreatment = new JTextField("splint, etc.", 10);
         c.weightx = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 1;
-        c.gridy = 9;
+        c.gridx = 7;
+        c.gridwidth = 2;
+        c.gridy = 5;
         add(otherTreatment, c);
+        otherTreatment.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                model.other = otherTreatment.getText();
+                report.setText(model.report());
+            }
+
+            public void removeUpdate(DocumentEvent e) {
+                changedUpdate(e);
+            }
+
+            public void insertUpdate(DocumentEvent e) {
+                changedUpdate(e);
+            }
+        });
 
         JLabel patientTransport = new JLabel("Who transported: ");
         c.weightx = 0.5;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 2;
-        c.gridy = 9;
+        c.gridx = 0;
+        c.gridwidth = 1;
+        c.gridy = 6;
         add(patientTransport, c);
 
         JRadioButton medicTransport = new JRadioButton("Medics");
@@ -430,9 +509,9 @@ public class SOAP extends JFrame {
         medicTransport.setActionCommand("Medics");
         c.weightx = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 3;
+        c.gridx = 1;
         c.gridwidth = 1;
-        c.gridy = 9;
+        c.gridy = 6;
         add(medicTransport, c);
 
         JRadioButton blsTransport = new JRadioButton("CPFD");
@@ -440,9 +519,9 @@ public class SOAP extends JFrame {
         blsTransport.setActionCommand("CPFD");
         c.weightx = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 4;
+        c.gridx = 2;
         c.gridwidth = 1;
-        c.gridy = 9;
+        c.gridy = 6;
         add(blsTransport, c);
 
         JRadioButton noTransport = new JRadioButton("None");
@@ -450,9 +529,9 @@ public class SOAP extends JFrame {
         noTransport.setActionCommand("None");
         c.weightx = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 5;
+        c.gridx = 3;
         c.gridwidth = 1;
-        c.gridy = 9;
+        c.gridy = 6;
         add(noTransport, c);
 
         // Create Group for Transport
@@ -466,36 +545,40 @@ public class SOAP extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 model.transport = "Medics recieved signature and transported to SMMC. ";
+                report.setText(model.report());
             }
         });
         blsTransport.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 model.transport = "Received signature for transport, transferred Pt to cot and secured with straps, transferred cot to ambulance and secured with mechanical lock, transported to SMMC. Radio report to ER, transferred to ER, verbal report to nurse.";
+                report.setText(model.report());
             }
         });
         noTransport.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 model.transport = "Pt refused transport. ";
+                report.setText(model.report());
             }
         });
 
         // Adding the Report to the GUI
+        report.setLineWrap(true);
         c.weightx = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
-        c.gridwidth = 6;
-        c.gridy = 10;
+        c.gridwidth = 11;
+        c.gridy = 7;
         add(report, c);
 
         // Confirm Button
         JButton copy = new JButton("Copy");
         c.weightx = 0.5;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 5;
+        c.gridx = 10;
         c.gridwidth = 1;
-        c.gridy = 11;
+        c.gridy = 8;
         add(copy, c);
         copy.addActionListener(new ActionListener() {
             @Override
@@ -506,28 +589,12 @@ public class SOAP extends JFrame {
             }
         });
 
-        // Close Button
-        JButton close = new JButton("Exit");
-        c.weightx = 0.5;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 6;
-        c.gridwidth = 1;
-        c.gridy = 11;
-        add(close, c);
-        close.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                model.writeReport();
-                System.exit(0);
-            }
-        });
-
         SOAP soap = this;
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 if (JOptionPane.showConfirmDialog(soap,
-                        "Are you sure you want to close this window?", "Close Window?",
+                        "Are you sure you want to close this window? Your data will not be saved.", "Close Window?",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
                     System.exit(0);

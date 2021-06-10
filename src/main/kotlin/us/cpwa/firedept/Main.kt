@@ -5,7 +5,7 @@ import javax.swing.WindowConstants
 fun main() {
     with(SOAP()) {
         defaultCloseOperation = WindowConstants.DO_NOTHING_ON_CLOSE
-        setSize(800, 800)
+        setSize(900, 700)
         isVisible = true
     }
 }
