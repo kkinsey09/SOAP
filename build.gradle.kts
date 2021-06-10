@@ -7,7 +7,7 @@ plugins {
     application
 }
 
-group = "com.cp.firedept"
+group = "us.cpwa.firedept"
 version = "1.0"
 
 repositories {
@@ -25,7 +25,7 @@ tasks.getByName<Test>("test") {
 }
 
 application {
-    mainClass.set("com.cp.firedept.MainKt")
+    mainClass.set("us.cpwa.firedept.MainKt")
 }
 
 tasks.register("fatJar", type = Jar::class) {
@@ -35,7 +35,7 @@ tasks.register("fatJar", type = Jar::class) {
     manifest {
         attributes["Implementation-Title"] = project.name
         attributes["Implementation-Version"] = archiveVersion
-        attributes["Main-Class"] = "com.cp.firedept.MainKt"
+        attributes["Main-Class"] = "us.cpwa.firedept.MainKt"
     }
 }
 

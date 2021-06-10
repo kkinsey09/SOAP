@@ -1,218 +1,269 @@
 package us.cpwa.firedept;
 
 // Graphics Libraries
+
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 
 public class SOAP extends JFrame {
-
-    // Setup all the variables we will need
-    public JLabel spacer1;
-    public JLabel spacer2;
-
-    // Confirm Button
-    public JButton confirm;
-
-    // Subjective
-    public JLabel dispatchMessage;
-    public JButton nOO;
-    public JButton law;
-    public JButton landline;
-    public JLabel facilityMessage;
-    public JButton facilityYes;
-    public JButton facilityNo;
-    public JLabel patientAge;
-    public JTextField ptAge;
-    public JLabel ptGender;
-    public JButton male;
-    public JButton female;
-    public JLabel patientComplaint;
-    public JTextField ptComplaint;
-    public JLabel patientReport;
-    public JTextField ptReport;
-
-    // Objective
-    public JLabel patientPosition;
-    public JTextField ptPosition;
-    public JLabel CAOLabel;
-    public JButton CAOx0;
-    public JButton CAOx1;
-    public JButton CAOx2;
-    public JButton CAOx3;
-    public JButton CAOx4;
-    public JLabel patientPrimary;
-    public JTextField ptPrimary;
-
-
-    // Assessment
-    public JLabel patientAssessment;
-    public JTextField ptAssessment;
-
-    // Plan
-    public JLabel patientCovid;
-    public JButton yesCovid;
-    public JButton noCovid;
-    public JLabel patientOther;
-    public JTextField otherTreatment;
-    public JLabel patientTransport;
-    public JButton medicTransport;
-    public JButton blsTransport;
-    public JButton noTransport;
-
-    // Close Button
-    public JButton close;
-
     // Constructor
     public SOAP() {
         super("Semi-Automated com.cp.firedept.SOAP Note Writer");
+
+        SOAPModel model = new SOAPModel();
+
         setLayout(new FlowLayout());
 
-        // Declare a spacer to format
-        spacer1 = new JLabel("         ");
-        spacer2 = new JLabel("                                                 ");
+        // Why do I change this? I will just change the format later?
+        JLabel spacer1 = new JLabel("         ");
+        JLabel spacer2 = new JLabel("                                                 ");
 
         //////////// Subjective /////////////
+        JLabel dispatchMessage;
         dispatchMessage = new JLabel("How was this Dispatched: ");
         add(dispatchMessage);
-        nOO = new JButton("911");
+
+        JButton nOO = new JButton("911");
         add(nOO);
+        nOO.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.dispatch = "S: 911 dispatch to a ";
+            }
+        });
+
+        JButton law;
         law = new JButton("Law");
         add(law);
+        law.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.dispatch = "S: Requested by law enforcement for a ";
+            }
+        });
+
+        JButton landline;
         landline = new JButton("Landline");
         add(landline);
+        landline.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.dispatch = "S: landline dispatch to a ";
+            }
+        });
 
+        JLabel facilityMessage;
         facilityMessage = new JLabel("From a facility: ");
         add(facilityMessage);
+
+        JButton facilityYes;
         facilityYes = new JButton("Yes");
         add(facilityYes);
+        facilityYes.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.facility = "facility with a ";
+            }
+        });
+
+        JButton facilityNo;
         facilityNo = new JButton("No");
         add(facilityNo);
+        facilityNo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.facility = "";
+            }
+        });
 
-        patientAge = new JLabel("Pt age: ");
+        JLabel patientAge = new JLabel("Pt age: ");
         add(patientAge);
-        ptAge = new JTextField("age", 3);
+        JTextField ptAge = new JTextField("age", 3);
         add(ptAge);
 
-        ptGender = new JLabel("Pt gender: ");
+        JLabel ptGender = new JLabel("Pt gender: ");
         add(ptGender);
-        male = new JButton("Male");
-        add(male);
-        female = new JButton("Female");
-        add(female);
 
-        patientComplaint = new JLabel("Pt Complaint: ");
+        JButton male = new JButton("Male");
+        add(male);
+        male.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.gender = "male";
+            }
+        });
+
+        JButton female = new JButton("Female");
+        add(female);
+        female.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.gender = "female";
+            }
+        });
+
+        JLabel patientComplaint = new JLabel("Pt Complaint: ");
         add(patientComplaint);
-        ptComplaint = new JTextField("complaint of ", 20);
+        JTextField ptComplaint = new JTextField("complaint of ", 20);
         add(ptComplaint);
 
-        patientReport = new JLabel("Pt Report: ");
+        JLabel patientReport = new JLabel("Pt Report: ");
         add(patientReport);
-        ptReport = new JTextField("[Rest of the S]", 40);
+        JTextField ptReport = new JTextField("[Rest of the S]", 40);
         add(ptReport);
 
         //////////// Objective /////////////
-        patientPosition = new JLabel("Position upon arrival: ");
+        JLabel patientPosition = new JLabel("Position upon arrival: ");
         add(patientPosition);
-        ptPosition = new JTextField("supine, etc", 5);
+        JTextField ptPosition = new JTextField("supine, etc", 5);
         add(ptPosition);
 
-        CAOLabel = new JLabel("CAOx ");
+        JLabel CAOLabel = new JLabel("CAOx ");
         add(CAOLabel);
-        CAOx0 = new JButton("0");
+
+        JButton CAOx0 = new JButton("0");
         add(CAOx0);
-        CAOx1 = new JButton("1");
+        CAOx0.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.caoValue = 0;
+            }
+        });
+
+        JButton CAOx1 = new JButton("1");
         add(CAOx1);
-        CAOx2 = new JButton("2");
+        CAOx1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.caoValue = 1;
+            }
+        });
+
+        JButton CAOx2 = new JButton("2");
         add(CAOx2);
-        CAOx3 = new JButton("3");
+        CAOx2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.caoValue = 2;
+            }
+        });
+
+        JButton CAOx3 = new JButton("3");
         add(CAOx3);
-        CAOx4 = new JButton("4");
+        CAOx3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.caoValue = 3;
+            }
+        });
+
+        JButton CAOx4 = new JButton("4");
         add(CAOx4);
+        CAOx4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.caoValue = 4;
+            }
+        });
 
         add(spacer1); // add spacer to format
 
-        patientPrimary = new JLabel("Primary Assessment: ");
+        JLabel patientPrimary = new JLabel("Primary Assessment: ");
         add(patientPrimary);
-        ptPrimary = new JTextField("[Rest of the O]", 40);
+        JTextField ptPrimary = new JTextField("[Rest of the O]", 40);
         add(ptPrimary);
 
         //////////// Assessment /////////////
-        patientAssessment = new JLabel("Assessment: ");
+        JLabel patientAssessment = new JLabel("Assessment: ");
         add(patientAssessment);
-        ptAssessment = new JTextField("[Assessment]", 10);
+        JTextField ptAssessment = new JTextField("[Assessment]", 10);
         add(ptAssessment);
 
         //////////// Plan /////////////
-        patientCovid = new JLabel("COVID PPE: ");
+        JLabel patientCovid = new JLabel("COVID PPE: ");
         add(patientCovid);
-        yesCovid = new JButton("Yes");
+        JButton yesCovid = new JButton("Yes");
         add(yesCovid);
-        noCovid = new JButton("No");
+        yesCovid.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.covidStatus = "Wore PPE provided for COVID-19 calls, ";
+            }
+        });
+
+        JButton noCovid = new JButton("No");
         add(noCovid);
+        noCovid.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.covidStatus = "";
+            }
+        });
 
         add(spacer2); // add spacer to format
 
-        patientOther = new JLabel("Other Treatments: ");
+        JLabel patientOther = new JLabel("Other Treatments: ");
         add(patientOther);
-        otherTreatment = new JTextField("splint, etc.", 10);
+        JTextField otherTreatment = new JTextField("splint, etc.", 10);
         add(otherTreatment);
-        patientTransport = new JLabel("Who transported: ");
+
+        JLabel patientTransport = new JLabel("Who transported: ");
         add(patientTransport);
-        medicTransport = new JButton("Medics");
+
+        JButton medicTransport = new JButton("Medics");
         add(medicTransport);
-        blsTransport = new JButton("CPFD");
+        medicTransport.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.transport = "Medics recieved signature and transported to SMMC. ";
+            }
+        });
+
+        JButton blsTransport = new JButton("CPFD");
         add(blsTransport);
-        noTransport = new JButton("None");
+        blsTransport.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.transport = "Received signature for transport, transferred Pt to cot and secured with straps, transferred cot to ambulance and secured with mechanical lock, transported to SMMC. Radio report to ER, transferred to ER, verbal report to nurse.";
+            }
+        });
+
+        JButton noTransport = new JButton("None");
         add(noTransport);
+        noTransport.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.transport = "Pt refused transport. ";
+            }
+        });
 
         // Confirm Button
-        confirm = new JButton("Confirm");
+        JButton confirm = new JButton("Confirm");
         add(confirm);
+        confirm.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.age = ptAge.getText();
+                model.complaint = ptComplaint.getText();
+                model.report = ptReport.getText();
+                model.position = ptPosition.getText();
+                model.primary = ptPosition.getText();
+                model.assessment = ptAssessment.getText();
+                model.other = otherTreatment.getText();
+            }
+        });
 
         // Close Button
-        close = new JButton("Exit");
+        JButton close = new JButton("Exit");
         add(close);
-
-        // Action Listener
-        // Subjective
-        ActionHandler handler = new ActionHandler(this);
-        nOO.addActionListener(handler);
-        law.addActionListener(handler);
-        landline.addActionListener(handler);
-        facilityYes.addActionListener(handler);
-        facilityNo.addActionListener(handler);
-        ptAge.addActionListener(handler);
-        male.addActionListener(handler);
-        female.addActionListener(handler);
-        ptComplaint.addActionListener(handler);
-        ptReport.addActionListener(handler);
-
-        // Objective
-        ptPosition.addActionListener(handler);
-        CAOx0.addActionListener(handler);
-        CAOx1.addActionListener(handler);
-        CAOx2.addActionListener(handler);
-        CAOx3.addActionListener(handler);
-        CAOx4.addActionListener(handler);
-        ptPrimary.addActionListener(handler);
-
-        // Assessment
-        ptAssessment.addActionListener(handler);
-
-        // Plan
-        yesCovid.addActionListener(handler);
-        noCovid.addActionListener(handler);
-        otherTreatment.addActionListener(handler);
-        medicTransport.addActionListener(handler);
-        blsTransport.addActionListener(handler);
-        noTransport.addActionListener(handler);
-
-        // Confirm Button
-        confirm.addActionListener(handler);
-
-        // Close Button
-        close.addActionListener(handler);
-
+        close.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
     }
 }
