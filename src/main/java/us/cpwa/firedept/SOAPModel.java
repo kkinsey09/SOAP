@@ -22,36 +22,23 @@ public class SOAPModel {
     public String covidStatus = "[Covid Status] ";
     public String other = "[Other Treatments]";
     public String transport = "[Transport Status]";
+
     public String report() {
+        return "S: " + dispatch + facility + age + "y/o " + gender + complaint + " " + report +
+                "\r\n\r\n" + "O: Upon arrival find Pt " + position
+                + ". CAOx" + caoValue + ". " + primary + "\r\n\r\n" + "A: " + assessment
+                + "\r\n\r\n" + "P: " + covidStatus + "ABCs, Pt Hx and initial assessment, vitals, CAOx"
+                + caoValue + " " + other + " " + transport + " Decontamination and call closed.";
+    }
 
+    void writeReport() {
         try {
-            // Printing out the actual com.cp.firedept.SOAP
+            // Printing out the actual SOAP
             PrintWriter writer = new PrintWriter(SOAPModel.fileName);
-
-            // Subjective
-            writer.print("S: " + dispatch + facility + age + "y/o " + gender + complaint + " " + report);
-
-            // Objective
-            writer.println();
-            writer.println();
-            writer.print("O: Upon arrival find Pt " + position
-                    + ". CAOx" + caoValue + ". " + primary);
-
-            // Assessment
-            writer.println();
-            writer.println();
-            writer.print("A: " + assessment);
-
-            // Plan
-            writer.println();
-            writer.println();
-            writer.print("P: " + covidStatus + "ABCs, Pt Hx and initial assessment, vitals, CAOx"
-                    + caoValue + " " + other + " " + transport + " Decontamination and call closed.");
+            writer.print(report());
             writer.close();
         } catch (Exception e) {
             System.out.println(e);
         }
-
-        return "";
     }
 }
