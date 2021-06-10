@@ -1,0 +1,7 @@
+S: [Dispatch Type][Pt Age]y/o male, [Pt Complaint] [Pt Report]
+
+O: Upon arrival find Pt [Pt Position]. CAOx0. [Primary Assessment]
+
+A: [Assessment]
+
+P: [Covid Status] ABCs, Pt Hx and initial assessment, vitals, CAOx0 [Other Treatments] [Transport Status] Decontamination and call closed.
